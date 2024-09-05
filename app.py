@@ -11,10 +11,10 @@ class LLaMAScoreAnalyzer:
         self.models = ["Baseline", "LoRA"]
         self.scores_gpt = ["relevance_score", "cc_score", "syntax_score", "complete_score"]
         self.rouge_bleu = ["rougeL", "bleu"]
-        self.categories = ["hallucination_type", "is_repeat"]
+        self.categories = ["hallucination_type"]
         self.DATA_PATH = {
                 "Nepali": {"Baseline": "./data/nepali_baseline_all_scores.csv", "LoRA": "./data/nepali_lora_all_scores.csv"},
-                "Hindi": {"Baseline": "./data/hindi_baseline_all_scores.csv", "LoRA": "./data/nepali_baseline_all_scores.csv"}
+                "Hindi": {"Baseline": "./data/hindi_baseline_all_scores.csv", "LoRA": "./data/hindi_lora_all_scores.csv"}
             }
         
     def load_samples(self, lang):
@@ -130,7 +130,7 @@ class LLaMAScoreAnalyzer:
             st.sidebar.markdown("""
                     Show additional evaluation scores and categories below:
                             """)   
-            additional_score_categories = st.sidebar.checkbox("Hallucination and Instruction Repeat Statistics", value=False)
+            additional_score_categories = st.sidebar.checkbox("Hallucination Statistics", value=False)
             if additional_score_categories:
                 additional_categories = st.sidebar.multiselect("Select Category", self.categories, default="hallucination_type")
                 for language in selected_languages:
