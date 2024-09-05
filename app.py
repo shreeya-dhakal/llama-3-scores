@@ -36,6 +36,7 @@ class LLaMAScoreAnalyzer:
         return df
 
     def draw_specific_plots(self, data, categories, x_variable, title):
+
         fig, ax = plt.subplots(figsize=(12, 6))
 
         palette = sns.color_palette("pastel", len(categories) * len(data[x_variable].unique()))
@@ -48,7 +49,7 @@ class LLaMAScoreAnalyzer:
                             label=f"{category} ({unique_value})")
         
         ax.set_title(title, fontsize=16)
-        ax.set_xlabel(f"{x_variable}", fontsize=12)
+        ax.set_xlabel("Score", fontsize=12)
         ax.set_ylabel("Density", fontsize=12)
         ax.legend(title="Category (Language/Model)")
         
@@ -72,7 +73,7 @@ class LLaMAScoreAnalyzer:
     def draw_bar_plot(self, data, categories, x_variable, title):
         fig, axs = plt.subplots(len(categories), 1, figsize=(10, 6 * len(categories)))
 
-        palette = sns.color_palette("pastel", len(categories))
+        palette = sns.color_palette("pastel", len(data))
 
         if len(categories) == 1:
             axs = [axs]  # Ensure axs is iterable even for a single plot
@@ -116,13 +117,13 @@ class LLaMAScoreAnalyzer:
         if detailed_view:
             for language in selected_languages:
                 language_data = combined_data[combined_data['Language'] == language]
-                title = f"Distribution of {selected_gpt_scoring}  for {language}"
+                title = f"Distribution of Scores for {language}"
                 fig = self.draw_specific_plots(language_data, selected_gpt_scoring, 'Model', title)
                 st.pyplot(fig)
             if len(selected_languages) > 1:
                 for model in selected_models:
                     model_data = combined_data[combined_data['Model'] == model]
-                    title = f"Distribution of {selected_gpt_scoring} for {model}"
+                    title = f"Distribution of Scores for {model}"
                     fig = self.draw_specific_plots(model_data, selected_gpt_scoring, 'Language', title)
                     st.pyplot(fig)
             
